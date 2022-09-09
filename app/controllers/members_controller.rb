@@ -1,5 +1,6 @@
-lass MembersController < ApplicationController
-  before_action :authenticate_user!
+class MembersController < ApplicationController
+  before_action :authenticate_user!, only: %i[show]
+
 
   def show
     user = get_user_from_token
