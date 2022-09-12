@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_09_12_103435) do
+ActiveRecord::Schema[7.0].define(version: 2022_09_12_150740) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -21,6 +21,22 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_12_103435) do
     t.datetime "updated_at", null: false
     t.index ["guest_id"], name: "index_attendances_on_guest_id"
     t.index ["meal_id"], name: "index_attendances_on_meal_id"
+  end
+
+  create_table "categories", force: :cascade do |t|
+    t.string "label"
+    t.string "svg_icon"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "join_category_meals", force: :cascade do |t|
+    t.bigint "category_id"
+    t.bigint "meal_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["category_id"], name: "index_join_category_meals_on_category_id"
+    t.index ["meal_id"], name: "index_join_category_meals_on_meal_id"
   end
 
   create_table "jwt_denylist", force: :cascade do |t|
