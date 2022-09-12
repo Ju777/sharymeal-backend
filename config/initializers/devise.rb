@@ -21,7 +21,7 @@ Devise.setup do |config|
   # config.parent_controller = 'DeviseController'
 
     config.jwt do |jwt|
-      jwt.secret = Rails.application.credentials.devise[:jwt_secret_key]
+      jwt.secret = ENV["JWT_SECRET_KEY"]
     end
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in Devise::Mailer,
