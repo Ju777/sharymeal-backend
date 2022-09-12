@@ -7,7 +7,7 @@ class CreateMeals < ActiveRecord::Migration[7.0]
       t.integer :guest_capacity
       t.integer :guest_registered
       t.date :starting_date
-      t.string :location, array: true, default: []
+      t.json :location
       t.boolean :animals
       t.boolean :alcool
       t.boolean :doggybag
@@ -16,7 +16,7 @@ class CreateMeals < ActiveRecord::Migration[7.0]
       t.string :diet_type, array: true, default: []
 
       t.references :host, foreign_key: { to_table: :users }
-      t.references :guest, foreign_key: { to_table: :users }
+      # t.references :guest, foreign_key: { to_table: :users }
 
       t.timestamps
     end

@@ -38,7 +38,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_12_103435) do
     t.integer "guest_capacity"
     t.integer "guest_registered"
     t.date "starting_date"
-    t.string "location", default: [], array: true
+    t.json "location"
     t.boolean "animals"
     t.boolean "alcool"
     t.boolean "doggybag"
@@ -46,10 +46,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_12_103435) do
     t.string "allergens", default: [], array: true
     t.string "diet_type", default: [], array: true
     t.bigint "host_id"
-    t.bigint "guest_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["guest_id"], name: "index_meals_on_guest_id"
     t.index ["host_id"], name: "index_meals_on_host_id"
   end
 
@@ -70,6 +68,5 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_12_103435) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "meals", "users", column: "guest_id"
   add_foreign_key "meals", "users", column: "host_id"
 end
