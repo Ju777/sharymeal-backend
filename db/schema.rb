@@ -10,9 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_09_09_084845) do
+ActiveRecord::Schema[7.0].define(version: 2022_09_12_103435) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "attendances", force: :cascade do |t|
+    t.bigint "guest_id"
+    t.bigint "meal_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["guest_id"], name: "index_attendances_on_guest_id"
+    t.index ["meal_id"], name: "index_attendances_on_meal_id"
+  end
 
   create_table "jwt_denylist", force: :cascade do |t|
     t.string "jti", null: false
@@ -20,6 +29,28 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_09_084845) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["jti"], name: "index_jwt_denylist_on_jti"
+  end
+
+  create_table "meals", force: :cascade do |t|
+    t.string "title"
+    t.text "description"
+    t.decimal "price"
+    t.integer "guest_capacity"
+    t.integer "guest_registered"
+    t.date "starting_date"
+    t.string "location", default: [], array: true
+    t.boolean "animals"
+    t.boolean "alcool"
+    t.boolean "doggybag"
+    t.string "theme"
+    t.string "allergens", default: [], array: true
+    t.string "diet_type", default: [], array: true
+    t.bigint "host_id"
+    t.bigint "guest_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["guest_id"], name: "index_meals_on_guest_id"
+    t.index ["host_id"], name: "index_meals_on_host_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -30,8 +61,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_09_084845) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "name"
+    t.text "description"
+    t.string "city"
+    t.integer "age"
+    t.string "gender"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "meals", "users", column: "guest_id"
+  add_foreign_key "meals", "users", column: "host_id"
 end
