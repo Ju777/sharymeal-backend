@@ -1,0 +1,31 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  description: MyText
+  price: 9.99
+  guest_capacity: 1
+  guest_registered: 1
+  starting_date: 2022-09-12
+  location: MyString
+  animals: false
+  alcool: false
+  doggybag: false
+  theme: MyString
+  allergens: MyString
+  diet_type: MyString
+
+two:
+  title: MyString
+  description: MyText
+  price: 9.99
+  guest_capacity: 1
+  guest_registered: 1
+  starting_date: 2022-09-12
+  location: MyString
+  animals: false
+  alcool: false
+  doggybag: false
+  theme: MyString
+  allergens: MyString
+  diet_type: MyString
