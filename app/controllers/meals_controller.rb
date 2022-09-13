@@ -43,7 +43,7 @@ class MealsController < ApplicationController
     if (@meal.host_id === current_user.id )
       @meal.destroy
     else
-      render json: @article.errors, status: :unprocessable_entity
+      render json: @meal.errors, status: :unprocessable_entity
     end
   end
 
