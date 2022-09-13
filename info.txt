@@ -1,0 +1,8 @@
+API :
+
+- USER
+    - Update current user
+    - Find one user
+    - Find all users
+    - Delete one user
+

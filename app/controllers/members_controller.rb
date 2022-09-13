@@ -29,7 +29,6 @@ class MembersController < ApplicationController
         }
   end
 
-
   def show_user
     @user = User.find(params[:id])
     render json: @user.as_json(include: :hosted_meals)

@@ -9,10 +9,9 @@ class Meal < ApplicationRecord
 
    has_many_attached :images
 
-   def image_url
-      # puts "#"*50
-      # puts 'images => ', images.count
-      # puts "#"*50
-      Rails.application.routes.url_helpers.url_for(images) if images.attached?
-   end
+
+     def image_urls
+       images.map{|p| Rails.application.routes.url_helpers.url_for(p) }
+     end
+
 end
