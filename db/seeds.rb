@@ -29,6 +29,10 @@ ActiveRecord::Base.connection.reset_pk_sequence!('users')
    )
 end
 
+10.times do
+   Category.create(label: Faker::Food.ethnic_category)
+end
+
 20.times do 
    Meal.create!(
       title: Faker::Quote.singular_siegler,
@@ -49,14 +53,26 @@ end
 end
 
 Meal.all.each do |meal|
+   n = rand(1..3)
+   n.times do
+      JoinCategoryMeal.create!(
+         meal: meal,
+         category: Category.all.sample
+      )
+   end
+end
+
+Meal.all.each do |meal|
    n = rand(1..5)
    n.times do 
       Attendance.create!(
          guest: User.all.sample,
-         meal: meal
+         meal: meal         
       )
    end
 end
+
+
 
 
 

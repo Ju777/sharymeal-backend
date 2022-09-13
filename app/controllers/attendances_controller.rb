@@ -2,19 +2,20 @@ class AttendancesController < ApplicationController
    before_action :set_attendance, only: %i[ show update destroy ]
    before_action :authenticate_user!, only: %i[create, destroy, update, show, index]
  
-   # GET /meals
+   # GET /attendances
    def index
      @attendance = Attendance.all
+     
  
      render json: @attendance
    end
  
-   # GET /meals/1
+   # GET /attendances/1
    def show
      render json: @attendance
    end
  
-   # POST /meals
+   # POST /attendances
    def create
       @attendance = Attendance.new(attendance_params)
 
@@ -25,7 +26,7 @@ class AttendancesController < ApplicationController
       end
    end
  
-   # PATCH/PUT /meals/1
+   # PATCH/PUT /attendances/1
    def update
       @host = Meal.find(@attendance.meal_id).host
       if @host.id === current_user.id && @attendance.update(attendance_params)
@@ -35,7 +36,7 @@ class AttendancesController < ApplicationController
     end
    end
  
-   # DELETE /meals/1
+   # DELETE /attendances/1
    def destroy
       @host = Meal.find(@attendance.meal_id).host
       @guest = User.find(@attendance.guest_id)

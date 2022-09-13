@@ -5,13 +5,16 @@ class MealsController < ApplicationController
   # GET /meals
   def index
     @meals = Meal.all
+    categories = Category.all
+    
 
-    render json: @meals.as_json(include: :host)
+    render json: @meals.as_json(include: [host: {only: :name}, categories: {only: :label}])
   end
 
   # GET /meals/1
   def show
-    render json: @meal.as_json(include: :host)
+    guests = Attendance.where(meal_id: @meal.id)
+    render json: @meal.as_json(include: [:host, guests: {only: :name}])
   end
 
   # POST /meals
@@ -25,8 +28,6 @@ class MealsController < ApplicationController
       render json: @meal.errors, status: :unprocessable_entity
     end
 
-    puts "#"*100
-    puts @meal.allergens.length
   end
 
   # PATCH/PUT /meals/1
