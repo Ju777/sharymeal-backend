@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   resources :meals
+  resources :attendances
   devise_for :users,
              controllers: {
                sessions: 'users/sessions',
