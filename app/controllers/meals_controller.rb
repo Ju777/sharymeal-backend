@@ -31,7 +31,7 @@ class MealsController < ApplicationController
 
   # PATCH/PUT /meals/1
   def update
-    if @meal.update(meal_params)
+    if @meal.host_id === current_user.id && @meal.update(meal_params)
       render json: @meal
     else
       render json: @meal.errors, status: :unprocessable_entity
@@ -40,7 +40,11 @@ class MealsController < ApplicationController
 
   # DELETE /meals/1
   def destroy
-    @meal.destroy
+    if (@meal.host_id === current_user.id )
+      @meal.destroy
+    else
+      render json: @article.errors, status: :unprocessable_entity
+    end
   end
 
   private
