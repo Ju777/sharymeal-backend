@@ -4,7 +4,7 @@ class MembersController < ApplicationController
 
   def show_me
     user = get_user_from_token
-    render json: user.as_json(include: :hosted_meals)
+    render json: UserSerializer.new(user).serializable_hash[:data][:attributes]
   end
 
   def guested_meals
@@ -38,7 +38,7 @@ class MembersController < ApplicationController
   private
 
     def user_params
-      params.require(:user).permit(:name, :email, :age, :description, :city, :gender)
+      params.require(:user).permit(:name, :email, :age, :description, :city, :gender, :avatar)
     end
 
   def get_user_from_token
