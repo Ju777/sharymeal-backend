@@ -1,4 +1,4 @@
 class MealSerializer
   include JSONAPI::Serializer
-  attributes :image, :image_url, :host
+  attributes  :image_urls, :host
 end
