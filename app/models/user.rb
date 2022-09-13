@@ -8,4 +8,10 @@ class User < ApplicationRecord
 
 	has_many :hosted_meals, :class_name => "Meal", :foreign_key => "host_id"
 	has_many :guested_meals, through: :attendances, :class_name => "Meal"
+
+	has_one_attached :avatar
+
+	def avatar_url
+        Rails.application.routes.url_helpers.url_for(avatar) if avatar.attached?
+    end
 end
