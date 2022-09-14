@@ -10,7 +10,7 @@ class User < ApplicationRecord
 	has_one_attached :avatar
 
 	validates :name, length: { maximum: 15 }
-	validates :email, length: { maximum: 25 }, presence: true
+	validates :email, length: { maximum: 45 }, presence: true
 	validates :description, length: { maximum: 500 }
 	validates :age, numericality: { only_integer: true }, comparison: { greater_than: 16, less_than: 99 }
 
