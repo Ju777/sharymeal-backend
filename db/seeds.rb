@@ -9,11 +9,21 @@ require 'faker'
 Faker::Config.locale = 'fr'
 
 
+
+JoinCategoryMeal.destroy_all
+ActiveRecord::Base.connection.reset_pk_sequence!('join_category_meals')
+
+Attendance.destroy_all
+ActiveRecord::Base.connection.reset_pk_sequence!('attendances')
+
 Meal.destroy_all
 ActiveRecord::Base.connection.reset_pk_sequence!('meals')
 
 User.destroy_all
 ActiveRecord::Base.connection.reset_pk_sequence!('users')
+
+Category.destroy_all
+ActiveRecord::Base.connection.reset_pk_sequence!('categories')
 
 
 
@@ -29,8 +39,10 @@ ActiveRecord::Base.connection.reset_pk_sequence!('users')
    )
 end
 
-10.times do
-   Category.create(label: Faker::Food.ethnic_category)
+catArray = ["Japanese", "SeaFood", "Drink", "Meat", "Vege", "Fruits", "Mexican", "Belgium", "Pizza"]
+
+catArray.each do |cat|
+   Category.create(label: cat)
 end
 
 20.times do 
@@ -59,7 +71,9 @@ Meal.all.each do |meal|
          meal: meal,
          category: Category.all.sample
       )
+
    end
+   meal.categories = meal.categories.uniq
 end
 
 Meal.all.each do |meal|
