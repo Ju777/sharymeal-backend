@@ -6,7 +6,8 @@ class MealsController < ApplicationController
   def index
     @meals = Meal.all
     categories = Category.all
-    render json: @meals.as_json(include: [host: {only: :name}, categories: {only: :label}])
+    #render json: @meals.as_json(include: [host: {only: :name}, categories: {only: :label}])
+    render json: MealSerializer.new(@meal).serializable_hash[:data][:attributes]
   end
 
   # GET /meals/1
@@ -14,7 +15,6 @@ class MealsController < ApplicationController
     guests = Attendance.where(meal_id: @meal.id)
     #render json: @meal.as_json(include: [:host, guests: {only: :name}])
     render json: MealSerializer.new(@meal).serializable_hash[:data][:attributes]
-    
   end
 
   # POST /meals
