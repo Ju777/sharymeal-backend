@@ -52,7 +52,7 @@ end
       price: rand(2...24),
       guest_capacity: rand(1..11),
       guest_registered: rand(1..9),
-      starting_date: Faker::Date.between(from: (Date.today), to: '2022-12-25'),
+      starting_date: Faker::Time.between_dates(from: Date.today, to: Date.today + 60, period: :all),
       location: {city: Faker::Address.city, lat: Faker::Address.latitude, lon: Faker::Address.longitude, address: Faker::Address.full_address},
       host: User.find(rand(1..10)),
       animals: [true, false].sample,
@@ -85,8 +85,6 @@ Meal.all.each do |meal|
       )
    end
 end
-
-
 
 
 
