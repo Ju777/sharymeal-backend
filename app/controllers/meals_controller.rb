@@ -5,9 +5,11 @@ class MealsController < ApplicationController
   # GET /meals
   def index
     @meals = Meal.all
-    categories = Category.all
-    #render json: @meals.as_json(include: [host: {only: :name}, categories: {only: :label}])
-    render json: MealSerializer.new(@meal).serializable_hash[:data][:attributes]
+    # categories = Category.all
+    # render json: @meals.as_json(include: [host: {only: :name}, categories: {only: :label}])
+    render json: @meals.map{|meal|
+      MealSerializer.new(meal).serializable_hash[:data][:attributes]
+      }
   end
 
   # GET /meals/1
