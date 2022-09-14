@@ -25,13 +25,13 @@ class MembersController < ApplicationController
   def index
     @users = User.all
     render json: @users.map{|user|
-        user.as_json(include: :hosted_meals)
+        UserSerializer.new(user).serializable_hash[:data][:attributes]
         }
   end
 
   def show_user
     @user = User.find(params[:id])
-    render json: @user.as_json(include: :hosted_meals)
+    render json: UserSerializer.new(@user).serializable_hash[:data][:attributes]
   end
 
   private

@@ -9,12 +9,6 @@ class User < ApplicationRecord
 	has_many :guested_meals, through: :attendances, :class_name => "Meal"
 	has_one_attached :avatar
 
-	validates :name, length: { maximum: 15 }
-	validates :email, length: { maximum: 45 }, presence: true
-	validates :description, length: { maximum: 500 }
-	validates :age, numericality: { only_integer: true }, comparison: { greater_than: 16, less_than: 99 }
-
-
 
 	def avatar_url
         Rails.application.routes.url_helpers.url_for(avatar) if avatar.attached?
