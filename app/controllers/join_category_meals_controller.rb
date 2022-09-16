@@ -14,6 +14,18 @@ class JoinCategoryMealsController < ApplicationController
 
   end
 
+  def destroy
+     @join_category_meal = JoinCategoryMeal.find(params[:id])
+    puts "*"*100
+    puts "CA MARCHE"
+    puts "*"*100
+     if  @join_category_meal.destroy
+        render  json: {message: "JoinCategoryMeal bien supprimé"}
+     else
+      render json: @join_category_meal.errors, status: :unprocessable_entity
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_join_category_meal
