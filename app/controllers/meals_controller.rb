@@ -4,6 +4,10 @@ class MealsController < ApplicationController
 
   # GET /meals
   def index
+    puts "#"
+    puts Rails.application.routes
+    puts "#"
+    
     @meals = Meal.all
     # categories = Category.all
     # render json: @meals.as_json(include: [host: {only: :name}, categories: {only: :label}])
