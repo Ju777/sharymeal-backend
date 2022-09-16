@@ -19,9 +19,14 @@ class MealsController < ApplicationController
   # GET /meals/1
   def show
     guests = Attendance.where(meal_id: @meal.id)
+    join_category_ids = Meal.find(@meal.id).joinCategoryMeal_ids
     #render json: @meal.as_json(include: [:host, guests: {only: :name}])
-    render json: MealSerializer.new(@meal).serializable_hash[:data][:attributes]
+    render json: {
+        joinCategoryMealIds: join_category_ids,
+        meal: MealSerializer.new(@meal).serializable_hash[:data][:attributes]
+    }
   end
+
 
   # POST /meals
   def create
