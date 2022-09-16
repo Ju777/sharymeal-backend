@@ -4,7 +4,14 @@ class MembersController < ApplicationController
 
   def show_me
     user = get_user_from_token
-    render json: UserSerializer.new(user).serializable_hash[:data][:attributes]
+    hosted_meals = Meal.all.where(host_id: user.id)
+    guested_meals = Attendance.where(guest_id: User.find(user.id))
+
+    render json: {
+      user: UserSerializer.new(user).serializable_hash[:data][:attributes],
+      hosted_meals: hosted_meals.as_json(include: :categories),
+      guested_meals: guested_meals.as_json(include: :meal)
+    }
   end
 
   def guested_meals
