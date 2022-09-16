@@ -2,7 +2,7 @@ class MembersController < ApplicationController
   before_action :authenticate_user!, only: %i[show_me, update_me]
 
 
-  def show_me
+ def show_me
     user = get_user_from_token
     hosted_meals = Meal.all.where(host_id: user.id)
     guested_meals = Attendance.where(guest_id: User.find(user.id))
