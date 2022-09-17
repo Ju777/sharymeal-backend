@@ -1,13 +1,10 @@
 class MealsController < ApplicationController
-  before_action :set_meal, only: %i[ show update destroy ]
+  before_action :set_meal, only: %i[ show update destroy get_meal_categories]
   before_action :authenticate_user!, only: %i[create]
 
   # GET /meals
   def index
-    puts "#"
-    puts Rails.application.routes
-    puts "#"
-    
+   
     @meals = Meal.all
     # categories = Category.all
     # render json: @meals.as_json(include: [host: {only: :name}, categories: {only: :label}])
@@ -20,13 +17,19 @@ class MealsController < ApplicationController
   def show
     guests = Attendance.where(meal_id: @meal.id)
     join_category_ids = Meal.find(@meal.id).joinCategoryMeal_ids
+    hosted_meals = Meal.all.where(host_id: @meal.host.id).count
     #render json: @meal.as_json(include: [:host, guests: {only: :name}])
     render json: {
         joinCategoryMealIds: join_category_ids,
-        meal: MealSerializer.new(@meal).serializable_hash[:data][:attributes]
+        meal: MealSerializer.new(@meal).serializable_hash[:data][:attributes],
+        hosted_meals: hosted_meals
     }
   end
 
+  def get_meal_categories
+    categories = Meal.find(@meal.id).categories
+    render json: categories
+  end
 
   # POST /meals
   def create
