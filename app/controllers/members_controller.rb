@@ -14,11 +14,11 @@ class MembersController < ApplicationController
     }
   end
 
-  def guested_meals
-    user = get_user_from_token
-    @meals = Attendance.where(guest_id: User.find(user.id))
-    render json: @meals.as_json(include: :meal)
-  end
+  # def guested_meals
+  #   user = get_user_from_token
+  #   @meals = Attendance.where(guest_id: User.find(user.id))
+  #   render json: @meals.as_json(include: :meal)
+  # end
 
   def update_me
     user = get_user_from_token

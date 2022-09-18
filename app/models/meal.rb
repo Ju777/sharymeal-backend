@@ -13,11 +13,6 @@ class Meal < ApplicationRecord
    validates :price, comparison: { greater_than: 0, less_than: 25 }, presence: true
 
    def image_urls
-    puts "#"*100
-    # puts images.methods
-    puts Rails.application.routes.methods
-    puts "#"*100
-
      images.map{|image| Rails.application.routes.url_helpers.url_for(image) } if images.attached?
    end
 end

@@ -7,7 +7,7 @@ Rails.application.routes.draw do
                registrations: 'users/registrations'
              }
   get '/me', to: 'members#show_me'
-  get '/guested_meals', to: 'members#guested_meals'
+  # get '/guested_meals', to: 'members#guested_meals'
   put '/update_me', to: 'members#update_me'
   get '/users_list', to: 'members#index'
   get '/user_detail/:id', to: 'members#show_user'
