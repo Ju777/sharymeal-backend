@@ -22,6 +22,7 @@ Devise.setup do |config|
 
     config.jwt do |jwt|
       jwt.secret = ENV["JWT_SECRET_KEY"]
+      jwt.expiration_time = 20.day.to_i
     end
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in Devise::Mailer,
