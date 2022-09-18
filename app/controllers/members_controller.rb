@@ -23,7 +23,7 @@ class MembersController < ApplicationController
   def update_me
     user = get_user_from_token
     if user.update(user_params)
-        render json: user
+        render json: UserSerializer.new(user).serializable_hash[:data][:attributes]
     else
         render json: user.errors, status: :unprocessable_entity
     end
