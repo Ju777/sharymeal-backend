@@ -13,4 +13,10 @@ class User < ApplicationRecord
 	def avatar_url
         Rails.application.routes.url_helpers.url_for(avatar) if avatar.attached?
     end
+
+	 after_create :welcome_send
+
+  def welcome_send
+    UserMailer.welcome_email(self).deliver_now
+  end 
 end
