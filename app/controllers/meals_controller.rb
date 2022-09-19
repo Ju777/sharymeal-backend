@@ -50,7 +50,8 @@ class MealsController < ApplicationController
 
   # PATCH/PUT /meals/1
   def update
-    if @meal.host_id === current_user.id && @meal.update(meal_params)
+    #if @meal.host_id === current_user.id && @meal.update(meal_params)
+    if @meal.update(meal_params)
       render json: @meal
     else
       render json: @meal.errors, status: :unprocessable_entity

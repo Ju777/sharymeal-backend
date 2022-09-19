@@ -43,12 +43,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_13_172652) do
   end
 
   create_table "attendances", force: :cascade do |t|
-    t.bigint "guest_id"
+    t.bigint "user_id"
     t.bigint "meal_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["guest_id"], name: "index_attendances_on_guest_id"
     t.index ["meal_id"], name: "index_attendances_on_meal_id"
+    t.index ["user_id"], name: "index_attendances_on_user_id"
   end
 
   create_table "categories", force: :cascade do |t|

@@ -5,8 +5,9 @@ class User < ApplicationRecord
 	jwt_revocation_strategy: JwtDenylist
 
 	has_many :attendances
+    has_many :meals, through: :attendances
+
 	has_many :hosted_meals, :class_name => "Meal", :foreign_key => "host_id"
-	has_many :guested_meals, through: :attendances, :class_name => "Meal"
 	has_one_attached :avatar
 
 
