@@ -1,6 +1,6 @@
 class AttendancesController < ApplicationController
    before_action :set_attendance, only: %i[ show update destroy ]
-   before_action :authenticate_user!, only: %i[create, destroy, update, show, index]
+    before_action :authenticate_user!, only: %i[create, destroy, update, show, index]
  
    # GET /attendances
    def index
@@ -17,7 +17,16 @@ class AttendancesController < ApplicationController
  
    # POST /attendances
    def create
+
+         puts "*" * 100
+         puts attendance_params
+         puts "*" * 100
+
+
       @attendance = Attendance.new(attendance_params)
+      @attendance.user = current_user
+
+
 
       if @attendance.save
          render json: @attendance, status: :created, location: @attendance
@@ -39,7 +48,7 @@ class AttendancesController < ApplicationController
    # DELETE /attendances/1
    def destroy
       @host = Meal.find(@attendance.meal_id).host
-      @guest = User.find(@attendance.guest_id)
+      @guest = User.find(@attendance.user_id)
       # Attendance.where(meal_id: @attendance.meal_id).find_by(guest_id: @attendance.guest_id)
       # puts "*"*100
       # puts @attendance.meal_id
@@ -60,6 +69,6 @@ class AttendancesController < ApplicationController
  
      # Only allow a list of trusted parameters through.
      def attendance_params
-       params.require(:attendance).permit(:guest_id, :meal_id)
+       params.require(:attendance).permit(:user_id, :meal_id)
      end
  end
