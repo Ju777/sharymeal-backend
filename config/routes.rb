@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   post '/join_categories', to: 'join_category_meals#create'
   delete '/join_categories/:id', to: 'join_category_meals#destroy'
   get '/categories/:id', to: 'meals#get_meal_categories'
-
+  post '/charges', to: 'charges#create'
   # put '/update_meal/:id', to:"meals#update_meal"
   # post 'add_avatar', to:'members#add_avatar'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
