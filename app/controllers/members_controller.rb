@@ -10,7 +10,9 @@ class MembersController < ApplicationController
       hosted_meals: hosted_meals.map{|meal|
         MealSerializer.new(meal).serializable_hash[:data][:attributes]
       },
-      guested_meals: guested_meals.as_json(include: :meal)
+      guested_meals: guested_meals.map{|meal|
+        MealSerializer.new(meal.meal).serializable_hash[:data][:attributes]
+      }
     }
   end
 
