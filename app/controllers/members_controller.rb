@@ -3,7 +3,7 @@ class MembersController < ApplicationController
  def show_me
     user = get_user_from_token
     hosted_meals = Meal.all.where(host_id: user.id)
-    guested_meals = Attendance.where(guest_id: User.find(user.id))
+    guested_meals = Attendance.where(user_id: User.find(user.id))
 
     render json: {
       user: UserSerializer.new(user).serializable_hash[:data][:attributes],

@@ -80,7 +80,7 @@ Meal.all.each do |meal|
    n = rand(1..5)
    n.times do 
       Attendance.create!(
-         guest: User.all.sample,
+         user: User.all.sample,
          meal: meal         
       )
    end
