@@ -53,6 +53,7 @@ gem "devise-jwt", "~> 0.9.0"
 gem "rack-cors", "~> 1.1"
 gem "figaro"
 gem "faker"
+gem 'stripe'
 
 gem "jsonapi-serializer", "~> 2.2"
 gem "aws-sdk-s3", require: false
