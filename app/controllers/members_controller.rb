@@ -2,30 +2,32 @@ class MembersController < ApplicationController
 
  def show_me
 
-    puts "#"*100
-    puts "\nget_user_from_token =>", get_user_from_token
-    puts "\nMeal.all.where(host_id: get_user_from_token.id) =>", Meal.all.where(host_id: get_user_from_token.id)
-    puts "\nAttendance.where(user: User.find(get_user_from_token.id)) =>", Attendance.where(user: User.find(get_user_from_token.id))
-    puts "#"
+    # puts "#"*100
+    # puts "\nget_user_from_token =>", get_user_from_token
+    # puts "\nMeal.all.where(host_id: get_user_from_token.id) =>", Meal.all.where(host_id: get_user_from_token.id)
+    # puts "\nAttendance.where(user: User.find(get_user_from_token.id)) =>", Attendance.where(user: User.find(get_user_from_token.id))
+    # puts "#"
 
     user = get_user_from_token
     hosted_meals = Meal.all.where(host_id: user.id)
-    guested_meals = Attendance.where(user: User.find(user.id))
+    # guested_meals = Attendance.where(user: User.find(user.id))
+    conversations = Message.where(sender: user).or(Message.where(recipient: user)).order(:created_at)
 
-    puts "#"*100
-    puts "\nuser =>", user
-    puts "\nhosted_meals", hosted_meals
-    puts "\nguested_meals =>", guested_meals
-    puts "#"
+    # puts "#"*100
+    # puts "\nuser =>", user
+    # puts "\nhosted_meals", hosted_meals
+    # puts "\nguested_meals =>", guested_meals
+    # puts "#"
 
     render json: {
       user: UserSerializer.new(user).serializable_hash[:data][:attributes],
       hosted_meals: hosted_meals.map{|meal|
         MealSerializer.new(meal).serializable_hash[:data][:attributes]
       },
-      guested_meals: guested_meals.map{|meal|
-        MealSerializer.new(meal.meal).serializable_hash[:data][:attributes]
-      }
+      # guested_meals: guested_meals.map{|meal|
+      #   MealSerializer.new(meal.meal).serializable_hash[:data][:attributes]
+      # },
+      conversations: conversations
     }
   end
 
