@@ -3,7 +3,7 @@ class MembersController < ApplicationController
  def show_me
     user = get_user_from_token
     hosted_meals = Meal.all.where(host_id: user.id)
-    # guested_meals = Attendance.where(user: User.find(user.id))
+    guested_meals = Attendance.where(user: User.find(user.id))
     user = get_user_from_token
     arrayMessage = Message.all.where( recipient: user).or(Message.all.where(sender: user))
     arrayUniq = []
@@ -21,9 +21,9 @@ class MembersController < ApplicationController
         MealSerializer.new(meal).serializable_hash[:data][:attributes]
       },
       list_chatters: arrayUniq,
-      # guested_meals: guested_meals.map{|meal|
-      #   MealSerializer.new(meal.meal).serializable_hash[:data][:attributes]
-      # },
+      guested_meals: guested_meals.map{|meal|
+        MealSerializer.new(meal.meal).serializable_hash[:data][:attributes]
+      },
     }
   end
 
