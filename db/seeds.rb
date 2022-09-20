@@ -76,15 +76,15 @@ Meal.all.each do |meal|
    meal.categories = meal.categories.uniq
 end
 
-Meal.all.each do |meal|
-   n = rand(1..5)
-   n.times do 
-      Attendance.create!(
-         user: User.all.sample,
-         meal: meal         
-      )
-   end
-end
+# Meal.all.each do |meal|
+#    n = rand(1..5)
+#    n.times do 
+#       Attendance.create!(
+#          user: User.all.sample,
+#          meal: meal         
+#       )
+#    end
+# end
 
 
 
