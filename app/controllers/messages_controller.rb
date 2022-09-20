@@ -13,6 +13,20 @@ class MessagesController < ApplicationController
     render json: @message
   end
 
+  # GET /conversations/1
+  def get_conversation
+      user = get_user_from_token
+      current_user_conversations = Message.all.where(sender: user, recipient: User.find(params[:id])).or(Message.all.where(sender: User.find(params[:id]), recipient: user)).order(:created_at)
+      render json: {
+      conversations: current_user_conversations
+      }
+  end
+
+
+
+
+
+
   # POST /messages
   def create
     @message = Message.new(message_params)
@@ -43,6 +57,12 @@ class MessagesController < ApplicationController
     def set_message
       @message = Message.find(params[:id])
     end
+
+      def get_user_from_token
+        jwt_payload = JWT.decode(request.headers['Authorization'].split(' ')[1], ENV["JWT_SECRET_KEY"]).first
+        user_id = jwt_payload['sub']
+        User.find(user_id.to_s)
+      end
 
     # Only allow a list of trusted parameters through.
     def message_params

@@ -1,41 +1,31 @@
 class MembersController < ApplicationController
 
  def show_me
-
-    # puts "#"*100
-    # puts "\nget_user_from_token =>", get_user_from_token
-    # puts "\nMeal.all.where(host_id: get_user_from_token.id) =>", Meal.all.where(host_id: get_user_from_token.id)
-    # puts "\nAttendance.where(user: User.find(get_user_from_token.id)) =>", Attendance.where(user: User.find(get_user_from_token.id))
-    # puts "#"
-
     user = get_user_from_token
     hosted_meals = Meal.all.where(host_id: user.id)
     # guested_meals = Attendance.where(user: User.find(user.id))
-    conversations = Message.where(sender: user).or(Message.where(recipient: user)).order(:created_at)
+    user = get_user_from_token
+    arrayMessage = Message.all.where( recipient: user).or(Message.all.where(sender: user))
+    arrayUniq = []
+    arrayMessage = arrayMessage.map { |m|
+        arrayUniq << m.sender
+        arrayUniq << m.recipient
+     }
 
-    # puts "#"*100
-    # puts "\nuser =>", user
-    # puts "\nhosted_meals", hosted_meals
-    # puts "\nguested_meals =>", guested_meals
-    # puts "#"
+     arrayUniq.delete_if { |h| h[:id] == user.id }
+     arrayUniq.uniq! {|e| e[:id] }
 
     render json: {
       user: UserSerializer.new(user).serializable_hash[:data][:attributes],
       hosted_meals: hosted_meals.map{|meal|
         MealSerializer.new(meal).serializable_hash[:data][:attributes]
       },
+      list_chatters: arrayUniq,
       # guested_meals: guested_meals.map{|meal|
       #   MealSerializer.new(meal.meal).serializable_hash[:data][:attributes]
       # },
-      conversations: conversations
     }
   end
-
-  # def guested_meals
-  #   user = get_user_from_token
-  #   @meals = Attendance.where(guest_id: User.find(user.id))
-  #   render json: @meals.as_json(include: :meal)
-  # end
 
   def update_me
     user = get_user_from_token
