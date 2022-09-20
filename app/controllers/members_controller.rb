@@ -1,12 +1,22 @@
 class MembersController < ApplicationController
 
  def show_me
+
+    puts "#"*100
+    puts "\nget_user_from_token =>", get_user_from_token
+    puts "\nMeal.all.where(host_id: user.id)", Meal.all.where(host_id: user.id)
+    puts "\nAttendance.where(user: User.find(user.id)) =>", Attendance.where(user: User.find(user.id))
+    puts "#"
+
     user = get_user_from_token
     hosted_meals = Meal.all.where(host_id: user.id)
-    guested_meals = Attendance.where(user: user)
+    guested_meals = Attendance.where(user: User.find(user.id))
+
     puts "#"*100
-    puts 'guested_meals', guested_meals
-    puts "#"*100
+    puts "\nuser =>", user
+    puts "\nhosted_meals", hosted_meals
+    puts "\nguested_meals =>", guested_meals
+    puts "#"
 
     render json: {
       user: UserSerializer.new(user).serializable_hash[:data][:attributes],
