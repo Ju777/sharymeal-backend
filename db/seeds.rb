@@ -8,7 +8,8 @@
 require 'faker'
 Faker::Config.locale = 'fr'
 
-
+Message.destroy_all
+ActiveRecord::Base.connection.reset_pk_sequence!('messages')
 
 JoinCategoryMeal.destroy_all
 ActiveRecord::Base.connection.reset_pk_sequence!('join_category_meals')
@@ -62,6 +63,10 @@ end
       theme: Faker::Food.ethnic_category,
       allergens: ["gluten", "lactose", "soy", "nuts", "shellfish"].sample(rand(1..5))
    )
+end
+
+20.times do 
+   Message.create(content: Faker::Book.title, sender_id: rand(1..10), recipient_id: rand(1..10))
 end
 
 Meal.all.each do |meal|
