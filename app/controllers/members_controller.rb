@@ -3,7 +3,7 @@ class MembersController < ApplicationController
  def show_me
     user = get_user_from_token
     hosted_meals = Meal.all.where(host_id: user.id)
-    guested_meals = Attendance.where(user_id: user.id)
+    guested_meals = Attendance.where(user: user)
     puts "#"*100
     puts 'guested_meals', guested_meals
     puts "#"*100
