@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :messages
   resources :meals
   resources :attendances
   devise_for :users,
