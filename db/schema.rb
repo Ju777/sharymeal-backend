@@ -43,12 +43,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_20_082831) do
   end
 
   create_table "attendances", force: :cascade do |t|
-    t.bigint "guest_id"
+    t.bigint "user_id"
     t.bigint "meal_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["guest_id"], name: "index_attendances_on_guest_id"
     t.index ["meal_id"], name: "index_attendances_on_meal_id"
+    t.index ["user_id"], name: "index_attendances_on_user_id"
   end
 
   create_table "categories", force: :cascade do |t|
@@ -124,6 +124,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_20_082831) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "attendances", "meals"
+  add_foreign_key "attendances", "users"
   add_foreign_key "meals", "users", column: "host_id"
   add_foreign_key "messages", "users", column: "recipient_id"
   add_foreign_key "messages", "users", column: "sender_id"
