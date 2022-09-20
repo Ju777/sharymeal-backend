@@ -4,8 +4,8 @@ class MembersController < ApplicationController
 
     puts "#"*100
     puts "\nget_user_from_token =>", get_user_from_token
-    puts "\nMeal.all.where(host_id: user.id)", Meal.all.where(host_id: user.id)
-    puts "\nAttendance.where(user: User.find(user.id)) =>", Attendance.where(user: User.find(user.id))
+    puts "\nMeal.all.where(host_id: user.id)", Meal.all.where(host_id: get_user_from_token.id)
+    puts "\nAttendance.where(user: User.find(user.id)) =>", Attendance.where(user: User.find(get_user_from_token.id))
     puts "#"
 
     user = get_user_from_token
