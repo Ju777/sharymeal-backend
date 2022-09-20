@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_09_20_082831) do
+ActiveRecord::Schema[7.0].define(version: 2022_09_20_143541) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -105,6 +105,17 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_20_082831) do
     t.index ["sender_id"], name: "index_messages_on_sender_id"
   end
 
+  create_table "reviews", force: :cascade do |t|
+    t.text "content"
+    t.integer "rating"
+    t.bigint "author_id"
+    t.bigint "host_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["author_id"], name: "index_reviews_on_author_id"
+    t.index ["host_id"], name: "index_reviews_on_host_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -129,4 +140,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_20_082831) do
   add_foreign_key "meals", "users", column: "host_id"
   add_foreign_key "messages", "users", column: "recipient_id"
   add_foreign_key "messages", "users", column: "sender_id"
+  add_foreign_key "reviews", "users", column: "author_id"
+  add_foreign_key "reviews", "users", column: "host_id"
 end

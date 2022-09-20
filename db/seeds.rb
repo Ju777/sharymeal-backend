@@ -8,6 +8,9 @@
 require 'faker'
 Faker::Config.locale = 'fr'
 
+Review.destroy_all
+ActiveRecord::Base.connection.reset_pk_sequence!('reviews')
+
 Message.destroy_all
 ActiveRecord::Base.connection.reset_pk_sequence!('messages')
 
@@ -91,6 +94,17 @@ Meal.all.each do |meal|
    end
 end
 
+User.all.each do |user|
+   n = rand(1..5)
+   n.times do
+      Review.create!(
+         content: "Review sur le user.",
+         author: User.find(rand(1..10)),
+         host: User.find(rand(1..10)),
+         rating: rand(1..5)
+      )
+   end
+end
 
 
 

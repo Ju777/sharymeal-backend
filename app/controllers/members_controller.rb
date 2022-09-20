@@ -15,6 +15,9 @@ class MembersController < ApplicationController
      arrayUniq.delete_if { |h| h[:id] == user.id }
      arrayUniq.uniq! {|e| e[:id] }
 
+    current_user_written_reviews = Review.all.where(host: user)
+    current_user_received_reviews = Review.all.where(author: user)
+
     render json: {
       user: UserSerializer.new(user).serializable_hash[:data][:attributes],
       hosted_meals: hosted_meals.map{|meal|
@@ -24,6 +27,11 @@ class MembersController < ApplicationController
       guested_meals: guested_meals.map{|meal|
         MealSerializer.new(meal.meal).serializable_hash[:data][:attributes]
       },
+      reviews: {
+        written: current_user_written_reviews,
+        received: current_user_received_reviews
+      }
+      
     }
   end
 

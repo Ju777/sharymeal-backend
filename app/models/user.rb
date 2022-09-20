@@ -13,6 +13,9 @@ class User < ApplicationRecord
 	has_many :sent_messages, :class_name => "Message", :foreign_key => "sender_id"
 	has_many :received_messages, :class_name => "Message", :foreign_key => "recipient_id"
 
+	has_many :written_reviews, :class_name => "Review", :foreign_key => "author_id"
+	has_many :received_reviews, :class_name => "Review", :foreign_key => "host_id"
+
 
 	def avatar_url
         Rails.application.routes.url_helpers.url_for(avatar) if avatar.attached?

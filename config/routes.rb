@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :reviews
   resources :messages
   resources :meals
   resources :attendances
@@ -18,6 +19,7 @@ Rails.application.routes.draw do
   post '/charges', to: 'charges#create'
 
   get 'conversation/:id', to: 'messages#get_conversation'
+  get 'host_reviews/:id', to: 'reviews#get_host_reviews'
 
 
   # put '/update_meal/:id', to:"meals#update_meal"
