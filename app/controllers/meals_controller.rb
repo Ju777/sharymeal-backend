@@ -21,12 +21,21 @@ class MealsController < ApplicationController
     join_category_ids = Meal.find(@meal.id).joinCategoryMeal_ids
     hosted_meals = Meal.all.where(host_id: @meal.host.id).count
     host_avatar = Meal.find(@meal.id).host
+    current_user_received_reviews = Review.all.where(host: Meal.find(@meal.id).host)
     #render json: @meal.as_json(include: [:host, guests: {only: :name}])
     render json: {
         joinCategoryMealIds: join_category_ids,
         meal: MealSerializer.new(@meal).serializable_hash[:data][:attributes],
         hosted_meals: hosted_meals,
-        host_avatar: UserSerializer.new(host_avatar).serializable_hash[:data][:attributes][:avatar_url]
+        host_avatar: UserSerializer.new(host_avatar).serializable_hash[:data][:attributes][:avatar_url],
+        host_reviews: {
+            received: current_user_received_reviews.map{|review|
+                {
+                   review_content: ReviewSerializer.new(review).serializable_hash[:data][:attributes],
+                   author_avatar: UserSerializer.new(review.author).serializable_hash[:data][:attributes][:avatar_url]
+              }
+            },
+        }
     }
   end
 
