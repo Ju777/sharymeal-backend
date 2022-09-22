@@ -53,7 +53,7 @@ end
    Meal.create!(
       title: Faker::Food.dish,
       description: Faker::Food.description,
-      price: rand(2...24),
+      price: rand(1...24),
       guest_capacity: rand(1..11),
       guest_registered: rand(1..9),
       starting_date: Faker::Time.between_dates(from: Date.today, to: Date.today + 60, period: :all),
