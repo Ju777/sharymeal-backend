@@ -3,7 +3,7 @@ class CreateMeals < ActiveRecord::Migration[7.0]
     create_table :meals do |t|
       t.string :title
       t.text :description
-      t.decimal :price
+      t.integer :price
       t.integer :guest_capacity
       t.integer :guest_registered
       t.date :starting_date

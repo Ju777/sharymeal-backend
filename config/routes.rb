@@ -19,6 +19,7 @@ Rails.application.routes.draw do
   post '/charges', to: 'charges#create'
 
   get 'conversation/:id', to: 'messages#get_conversation'
+  get 'last_message/:id', to: 'messages#get_last_message'
   get 'host_reviews/:id', to: 'reviews#get_host_reviews'
 
 
