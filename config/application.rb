@@ -17,6 +17,8 @@ module SharymealBackend
     # in config/environments, which are processed later.
     #
     # config.time_zone = "Central Time (US & Canada)"
+    config.time_zone = "Europe/Paris"
+    config.active_record.default_timezone = :local
     # config.eager_load_paths << Rails.root.join("extras")
 
     config.session_store :cookie_store, key: '_interslice_session'

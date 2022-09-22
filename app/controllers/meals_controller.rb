@@ -46,8 +46,19 @@ class MealsController < ApplicationController
 
   # POST /meals
   def create
+
+    puts "#"*100
+    puts "\nmeal_params : ", meal_params
+    puts "\nstarting_date :", meal_params[:starting_date]
+    
+    puts "#"*100
+    
     @meal = Meal.new(meal_params)
     @meal.host = current_user
+
+    # Need to add 1 day because of a mysterious difference bewteen the date sent by React and the date created by Rails.
+    @meal.starting_date += 1.days
+    
 
     if @meal.save
       render json: @meal, status: :created, location: @meal
