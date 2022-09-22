@@ -22,7 +22,15 @@ class MessagesController < ApplicationController
       }
   end
 
-
+  # GET /last_message/1
+  def get_last_message
+        user = get_user_from_token
+        last_message = Message.all.where(sender: user, recipient: User.find(params[:id])).or(Message.all.where(sender: User.find(params[:id]), recipient: user)).last
+        render json: {
+            last_message: last_message.as_json(only: [:content, :created_at]),
+            user: UserSerializer.new(last_message.recipient === user ? last_message.sender : last_message.recipient).serializable_hash[:data][:attributes]
+        }
+  end
 
 
 
