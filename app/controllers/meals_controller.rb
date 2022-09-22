@@ -1,5 +1,5 @@
 class MealsController < ApplicationController
-  before_action :set_meal, only: %i[ show update destroy get_meal_categories]
+  before_action :set_meal, only: %i[ show update destroy get_meal_categories get_guests_avatar_url]
   before_action :authenticate_user!, only: %i[create]
 
   # GET /meals
@@ -21,6 +21,7 @@ class MealsController < ApplicationController
     join_category_ids = Meal.find(@meal.id).joinCategoryMeal_ids
     hosted_meals = Meal.all.where(host_id: @meal.host.id).count
     host_avatar = Meal.find(@meal.id).host
+    guests_avatar = Meal.find(@meal.id).users
     current_user_received_reviews = Review.all.where(host: Meal.find(@meal.id).host)
     #render json: @meal.as_json(include: [:host, guests: {only: :name}])
     render json: {
@@ -28,6 +29,9 @@ class MealsController < ApplicationController
         meal: MealSerializer.new(@meal).serializable_hash[:data][:attributes],
         hosted_meals: hosted_meals,
         host_avatar: UserSerializer.new(host_avatar).serializable_hash[:data][:attributes][:avatar_url],
+        guests_avatar: guests_avatar.map{|guest|
+            UserSerializer.new(guest).serializable_hash[:data][:attributes]
+        },
         host_reviews: {
             received: current_user_received_reviews.map{|review|
                 {
@@ -42,6 +46,17 @@ class MealsController < ApplicationController
   def get_meal_categories
     categories = Meal.find(@meal.id).categories
     render json: categories
+  end
+
+
+  def get_guests_avatar_url
+       guests_avatar = Meal.find(@meal.id).users
+
+       render json: {
+           guests_avatar: guests_avatar.map{|guest_avatar|
+                UserSerializer.new(guest_avatar).serializable_hash[:data][:attributes]
+            },
+       }
   end
 
   # POST /meals
