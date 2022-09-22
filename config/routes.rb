@@ -22,6 +22,8 @@ Rails.application.routes.draw do
   get 'last_message/:id', to: 'messages#get_last_message'
   get 'host_reviews/:id', to: 'reviews#get_host_reviews'
 
+  get 'guests_avatar/:id', to: 'meals#get_guests_avatar_url'
+
 
   # put '/update_meal/:id', to:"meals#update_meal"
   # post 'add_avatar', to:'members#add_avatar'
