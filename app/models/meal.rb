@@ -10,7 +10,7 @@ class Meal < ApplicationRecord
    validates :starting_date, comparison: { greater_than: Date.yesterday }, presence: true
    validates :description, length: { maximum: 500 }, presence: true
    validates :guest_capacity, numericality: { only_integer: true }, comparison: { greater_than: 0, less_than: 12 }, presence: true
-   validates :title, length: { maximum: 36, minimum: 1 }, presence: true
+   validates :title, length: { maximum: 50, minimum: 1 }, presence: true
    validates :price, comparison: { greater_than: 0, less_than: 25 }, presence: true
 
    def image_urls

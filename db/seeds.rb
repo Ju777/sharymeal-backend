@@ -8,6 +8,9 @@
 require 'faker'
 Faker::Config.locale = 'fr'
 
+Review.destroy_all
+ActiveRecord::Base.connection.reset_pk_sequence!('reviews')
+
 Message.destroy_all
 ActiveRecord::Base.connection.reset_pk_sequence!('messages')
 
@@ -50,7 +53,7 @@ end
    Meal.create!(
       title: Faker::Food.dish,
       description: Faker::Food.description,
-      price: rand(2...24),
+      price: rand(1...24),
       guest_capacity: rand(1..11),
       guest_registered: rand(1..9),
       starting_date: Faker::Time.between_dates(from: Date.today, to: Date.today + 60, period: :all),
@@ -92,6 +95,17 @@ Meal.all.each do |meal|
    end
 end
 
+User.all.each do |user|
+   n = rand(1..5)
+   n.times do
+      Review.create!(
+         content: "Review sur le user.",
+         author: User.find(rand(1..10)),
+         host: User.find(rand(1..10)),
+         rating: rand(1..5)
+      )
+   end
+end
 
 
 

@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+	after_create :welcome_send
+
 	# Il faut ajouter les deux modules commençant par jwt
 	devise :database_authenticatable, :registerable, :recoverable,
 	:jwt_authenticatable,
@@ -13,14 +15,19 @@ class User < ApplicationRecord
 	has_many :sent_messages, :class_name => "Message", :foreign_key => "sender_id"
 	has_many :received_messages, :class_name => "Message", :foreign_key => "recipient_id"
 
+	has_many :written_reviews, :class_name => "Review", :foreign_key => "author_id"
+	has_many :received_reviews, :class_name => "Review", :foreign_key => "host_id"
+
 
 	def avatar_url
         Rails.application.routes.url_helpers.url_for(avatar) if avatar.attached?
     end
 
-	 after_create :welcome_send
+	def welcome_send
+		UserMailer.welcome_email(self).deliver_now
+	end 
 
-  def welcome_send
-    UserMailer.welcome_email(self).deliver_now
-  end 
+	def test_rspec(arg)
+		return arg
+	end
 end
