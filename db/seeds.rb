@@ -87,6 +87,7 @@ end
 Meal.all.each do |meal|
    n = rand(1..5)
    n.times do 
+      puts "put !"
       Attendance.create!(
          user: User.all.sample,
          meal: meal         

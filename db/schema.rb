@@ -77,7 +77,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_20_143541) do
   create_table "meals", force: :cascade do |t|
     t.string "title"
     t.text "description"
-    t.integer "price"
+    t.decimal "price"
     t.integer "guest_capacity"
     t.integer "guest_registered"
     t.date "starting_date"
