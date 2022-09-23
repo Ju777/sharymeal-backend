@@ -18,8 +18,6 @@ class MembersController < ApplicationController
     current_user_written_reviews = Review.all.where(host: user)
     current_user_received_reviews = Review.all.where(author: user)
 
-    #author_avatar = Review.find(params[:id]).author
-
     render json: {
       user: UserSerializer.new(user).serializable_hash[:data][:attributes],
       hosted_meals: hosted_meals.map{|meal|

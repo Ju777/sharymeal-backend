@@ -1,7 +1,5 @@
 class User < ApplicationRecord
 	after_create :welcome_send
-
-	# Il faut ajouter les deux modules commençant par jwt
 	devise :database_authenticatable, :registerable, :recoverable,
 	:jwt_authenticatable,
 	jwt_revocation_strategy: JwtDenylist

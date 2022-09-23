@@ -1,32 +1,13 @@
 class JoinCategoryMealsController < ApplicationController
- # before_action :set_join_category_meal, only: %i[ show update destroy ]
   before_action :authenticate_user!, only: %i[create]
-
 
   def create
     @join_category_meal = JoinCategoryMeal.new(join_category_meal_params)
-
-    # if is_owner?(params[:join_category_meal][:requester])
-        # puts "*" * 100
-        # puts "c'est lui"
-        # puts "*" * 100
-
       if @join_category_meal.save
         render json: @join_category_meal
       else
         render json: @join_category_meal.errors, status: :unprocessable_entity
       end
-
-      # else
-      #   # puts "*" * 100
-      #   # puts "c'est pas lui"
-      #   # puts "*" * 100
-      #   render json: {
-      #     account_owner: false,
-      #     message:"The account's owner authentication failed."
-      #   }
-      # end
-
   end
 
   def destroy
