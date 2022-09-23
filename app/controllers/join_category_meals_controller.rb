@@ -6,7 +6,7 @@ class JoinCategoryMealsController < ApplicationController
   def create
     @join_category_meal = JoinCategoryMeal.new(join_category_meal_params)
 
-    if is_owner?(params[:join_category_meal][:requester])
+    # if is_owner?(params[:join_category_meal][:requester])
         # puts "*" * 100
         # puts "c'est lui"
         # puts "*" * 100
@@ -17,15 +17,15 @@ class JoinCategoryMealsController < ApplicationController
         render json: @join_category_meal.errors, status: :unprocessable_entity
       end
 
-      else
-        # puts "*" * 100
-        # puts "c'est pas lui"
-        # puts "*" * 100
-        render json: {
-          account_owner: false,
-          message:"The account's owner authentication failed."
-        }
-      end
+      # else
+      #   # puts "*" * 100
+      #   # puts "c'est pas lui"
+      #   # puts "*" * 100
+      #   render json: {
+      #     account_owner: false,
+      #     message:"The account's owner authentication failed."
+      #   }
+      # end
 
   end
 
