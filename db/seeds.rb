@@ -5,3 +5,12 @@
 #
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
+
+Category.destroy_all
+ActiveRecord::Base.connection.reset_pk_sequence!('categories')
+
+catArray = ["Japanese", "SeaFood", "Drink", "Meat", "Vege", "Fruits", "Mexican", "Belgium", "Pizza"]
+
+catArray.each do |cat|
+   Category.create(label: cat)
+end
