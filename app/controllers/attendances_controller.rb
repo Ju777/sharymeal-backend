@@ -1,6 +1,6 @@
 class AttendancesController < ApplicationController
-   before_action :set_attendance, only: %i[ show update destroy ]
-    before_action :authenticate_user!, only: %i[create, destroy, update, show, index]
+  before_action :set_attendance, only: %i[ show update destroy ]
+  before_action :authenticate_user!, only: %i[create, destroy, update, show, index]
  
    # GET /attendances
    def index
@@ -70,5 +70,11 @@ class AttendancesController < ApplicationController
      # Only allow a list of trusted parameters through.
      def attendance_params
        params.require(:attendance).permit(:user_id, :meal_id)
+     end
+
+     private
+     
+     def is_owner?(requester)
+      return requester.id === current_user_id ? true : false 
      end
  end
