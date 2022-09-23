@@ -17,15 +17,8 @@ class AttendancesController < ApplicationController
  
    # POST /attendances
    def create
-      # puts "*" * 100
-      # puts "\n attendance_params", attendance_params
-      # puts "\n requester", params[:attendance][:requester]
-      # puts "*" * 100
-
+     
       if is_owner?(params[:attendance][:requester])
-        # puts "*" * 100
-        # puts "c'est lui"
-        # puts "*" * 100
         @attendance = Attendance.new(attendance_params)
         @attendance.user = current_user
         if @attendance.save
@@ -34,9 +27,6 @@ class AttendancesController < ApplicationController
           render json: @attendance.errors, status: :unprocessable_entity
         end
       else
-        # puts "*" * 100
-        # puts "c'est pas lui"
-        # puts "*" * 100
         render json: {
           account_owner: false,
           message:"The account's owner authentication failed."
@@ -58,11 +48,6 @@ class AttendancesController < ApplicationController
    def destroy
       @host = Meal.find(@attendance.meal_id).host
       @guest = User.find(@attendance.user_id)
-      # Attendance.where(meal_id: @attendance.meal_id).find_by(guest_id: @attendance.guest_id)
-      # puts "*"*100
-      # puts @attendance.meal_id
-      # # puts @host 
-      # puts "*"*100
       if (@host.id === current_user.id || @guest.id === current_user.id)
          @attendance.destroy
        else

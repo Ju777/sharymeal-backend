@@ -6,8 +6,6 @@ class MealsController < ApplicationController
   def index
    
     @meals = Meal.all
-    # categories = Category.all
-    # render json: @meals.as_json(include: [host: {only: :name}, categories: {only: :label}])
     render json: @meals.map{|meal|
       MealSerializer.new(meal).serializable_hash[:data][:attributes]
       }
@@ -23,7 +21,6 @@ class MealsController < ApplicationController
     host_avatar = Meal.find(@meal.id).host
     guests_avatar = Meal.find(@meal.id).users
     current_user_received_reviews = Review.all.where(host: Meal.find(@meal.id).host)
-    #render json: @meal.as_json(include: [:host, guests: {only: :name}])
     render json: {
         joinCategoryMealIds: join_category_ids,
         meal: MealSerializer.new(@meal).serializable_hash[:data][:attributes],
@@ -104,7 +101,6 @@ class MealsController < ApplicationController
 
   # PATCH/PUT /meals/1
   def update
-    #if @meal.host_id === current_user.id && @meal.update(meal_params)
     if @meal.update(meal_params)
       render json: @meal
     else
@@ -124,9 +120,6 @@ class MealsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_meal
-      # puts "#"*50
-      # puts "set_meal =>", params
-      # puts "#"*50
       @meal = Meal.find(params[:id])
     end
 

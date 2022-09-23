@@ -6,7 +6,6 @@ FactoryBot.define do
       guest_capacity {rand(1..11)}
       guest_registered {rand(1..11)}
       starting_date {Faker::Time.between_dates(from: Date.today, to: Date.today + 60, period: :all)}
-    #   location {city: Faker::Address.city, lat: Faker::Address.latitude, lon: Faker::Address.longitude, address: Faker::Address.full_address}
       host {User.first}
       animals {[true, false].sample}
       alcool {[true, false].sample}
