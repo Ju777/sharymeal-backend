@@ -1,5 +1,6 @@
 class ChargesController < ApplicationController
   before_action :authenticate_user!, only: %i[create]
+  
 
   def create
     # puts "#"*100
@@ -8,8 +9,8 @@ class ChargesController < ApplicationController
     # puts "\n requester", params[:requester][:id]
     # puts "#"*100
 
-    # if params[:requester][:id] === current_user.id
-    if IsAccountOwner.new(params[:requester][:id]).is_owner?
+
+    if params[:requester][:id] === current_user.id
     #   puts "#"*100
     # puts "c'est toi"
     # puts "#"*100

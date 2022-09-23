@@ -17,21 +17,30 @@ class AttendancesController < ApplicationController
  
    # POST /attendances
    def create
+      # puts "*" * 100
+      # puts "\n attendance_params", attendance_params
+      # puts "\n requester", params[:attendance][:requester]
+      # puts "*" * 100
 
-         puts "*" * 100
-         puts attendance_params
-         puts "*" * 100
-
-
-      @attendance = Attendance.new(attendance_params)
-      @attendance.user = current_user
-
-
-
-      if @attendance.save
-         render json: @attendance, status: :created, location: @attendance
+      if is_owner?(params[:attendance][:requester])
+        # puts "*" * 100
+        # puts "c'est lui"
+        # puts "*" * 100
+        @attendance = Attendance.new(attendance_params)
+        @attendance.user = current_user
+        if @attendance.save
+          render json: @attendance, status: :created, location: @attendance
+        else
+          render json: @attendance.errors, status: :unprocessable_entity
+        end
       else
-         render json: @attendance.errors, status: :unprocessable_entity
+        # puts "*" * 100
+        # puts "c'est pas lui"
+        # puts "*" * 100
+        render json: {
+          account_owner: false,
+          message:"The account's owner authentication failed."
+        }
       end
    end
  
@@ -69,12 +78,10 @@ class AttendancesController < ApplicationController
  
      # Only allow a list of trusted parameters through.
      def attendance_params
-       params.require(:attendance).permit(:user_id, :meal_id)
+       params.require(:attendance).permit(:user_id, :meal_id, :requester)
      end
 
-     private
-     
      def is_owner?(requester)
-      return requester.id === current_user_id ? true : false 
+      return requester[:id] === current_user.id ? true : false 
      end
  end

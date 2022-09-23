@@ -1,6 +1,6 @@
 class MealsController < ApplicationController
   before_action :set_meal, only: %i[ show update destroy get_meal_categories get_guests_avatar_url]
-  before_action :authenticate_user!, only: %i[create]
+  before_action :authenticate_user!, only: %i[create update destroy]
 
   # GET /meals
   def index
@@ -73,12 +73,31 @@ class MealsController < ApplicationController
 
     # Need to add 1 day because of a mysterious difference bewteen the date sent by React and the date created by Rails.
     @meal.starting_date += 1.days
+
+    if is_owner?(params[:meal][:requester])
+      puts "*" * 100
+      puts "c'est lui"
+      puts "*" * 100
     
 
-    if @meal.save
-      render json: @meal, status: :created #, location: @meal
+      if @meal.save
+        render json: {
+                        meal: @meal,
+                        status: :created,
+                        account_owner: true
+                      }
+      else
+        render json: @meal.errors, status: :unprocessable_entity
+      end
+
     else
-      render json: @meal.errors, status: :unprocessable_entity
+      puts "*" * 100
+      puts "c'est pas lui"
+      puts "*" * 100
+      render json: {
+        account_owner: false,
+        message:"The account's owner authentication failed."
+      }
     end
 
   end
@@ -113,6 +132,10 @@ class MealsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def meal_params
-      params.require(:meal).permit(:title, :description, :price, :guest_capacity, :guest_registered, :starting_date, {location: [:city, :lat, :lon, :address]}, :animals, :alcool, :doggybag, :theme, allergens: [], diet_type: [], images: [])
+      params.require(:meal).permit(:title, :description, :price, :guest_capacity, :guest_registered, :starting_date, {location: [:city, :lat, :lon, :address]}, :animals, :alcool, :doggybag, :theme, :requester, allergens: [], diet_type: [], images: [])
     end
+
+    def is_owner?(requester)
+      return requester[:id] === current_user.id ? true : false 
+     end
 end
