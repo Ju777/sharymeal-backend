@@ -1,5 +1,5 @@
 class Meal < ApplicationRecord
-   has_many :attendances
+   has_many :attendances, dependent: :delete_all
    has_many :users, through: :attendances
 
    belongs_to :host, :class_name => "User"
